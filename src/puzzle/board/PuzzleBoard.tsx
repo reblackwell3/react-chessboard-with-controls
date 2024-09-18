@@ -1,5 +1,6 @@
 import React from 'react';
 import HighlightChessboard from './HighlightChessboard';
+import guessService from './guessService';
 
 // Define the props interface directly inside the PuzzleBoard component file
 export interface PuzzleBoardProps {
@@ -21,13 +22,17 @@ const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   onCorrectDrop,
   onIncorrectDrop,
 }) => {
+  const service = guessService(moves, moveIndex, incMoveIndex);
+
   const onPieceDrop = (
     sourceSquare: string,
     targetSquare: string,
     piece: string,
   ) => {
-    const isCorrect = onCorrectDrop(sourceSquare, targetSquare, piece);
-    if (!isCorrect) {
+    const isCorrect = service.handleGuess(sourceSquare, targetSquare, piece);
+    if (isCorrect) {
+      onCorrectDrop(sourceSquare, targetSquare, piece);
+    } else {
       onIncorrectDrop(sourceSquare, targetSquare, piece);
     }
     return isCorrect;
