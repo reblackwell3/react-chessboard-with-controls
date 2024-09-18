@@ -1,11 +1,9 @@
 import React from 'react';
 import { Chessboard } from 'react-chessboard';
 
-const getCheckHighlighting = (kingSquare: string, isCheck: boolean) => {
+const getCheckHighlighting = (checkSquare: string) => {
   const styles: Record<string, any> = {};
-  if (isCheck) {
-    styles[kingSquare] = { backgroundColor: 'red' };
-  }
+  styles[checkSquare] = { backgroundColor: 'red' };
   return styles;
 };
 
@@ -24,21 +22,19 @@ const getFeedbackHighlighting = (
 };
 
 export interface HighlightChessboardProps {
-  kingSquare: string;
-  isCheck: boolean;
+  checkSquare: string;
   hintSquare: string | null;
   incorrectMoveSquare: string | null;
   [key: string]: any;
 }
 
 const HighlightChessboard = ({
-  kingSquare,
-  isCheck,
+  checkSquare,
   hintSquare,
   incorrectMoveSquare,
   ...props
 }: HighlightChessboardProps) => {
-  const checkStyles = getCheckHighlighting(kingSquare, isCheck);
+  const checkStyles = getCheckHighlighting(checkSquare);
   const feedbackStyles = getFeedbackHighlighting(
     hintSquare,
     incorrectMoveSquare,

@@ -1,47 +1,68 @@
 import React from 'react';
 import HighlightChessboard from './HighlightChessboard';
-import guessService from './guessService';
+import { FenPosition } from '../../position/Position';
 
 // Define the props interface directly inside the PuzzleBoard component file
 export interface PuzzleBoardProps {
   fen: string;
-  kingSquare: string;
   isCheck: boolean;
   hintSquare: string | null;
-  incorrectMoveSquare: string | null;
   onCorrectDrop: (source: string, target: string, piece: string) => boolean;
   onIncorrectDrop: (source: string, target: string, piece: string) => void;
+  incorrectMoveSquare: string | null;
+  setIncorrectMoveSquare: (square: string | null) => void;
+  moves: string[];
+  moveIndex: number;
+  incMoveIndex: () => void;
 }
 
 const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   fen,
-  kingSquare,
-  isCheck,
   hintSquare,
-  incorrectMoveSquare,
   onCorrectDrop,
   onIncorrectDrop,
+  incorrectMoveSquare,
+  setIncorrectMoveSquare,
+  moves,
 }) => {
-  const service = guessService(moves, moveIndex, incMoveIndex);
+  const position = new FenPosition(fen, moves);
+  const checkSquare = position.getCheckSquare();
 
   const onPieceDrop = (
     sourceSquare: string,
     targetSquare: string,
     piece: string,
   ) => {
-    const isCorrect = service.handleGuess(sourceSquare, targetSquare, piece);
+    const isCorrect = handleGuess(sourceSquare, targetSquare, piece);
     if (isCorrect) {
       onCorrectDrop(sourceSquare, targetSquare, piece);
+      position.next();
+      setTimeout(() => {
+        position.next();
+      }, 500);
     } else {
       onIncorrectDrop(sourceSquare, targetSquare, piece);
+      setIncorrectMoveSquare(targetSquare);
     }
     return isCorrect;
   };
 
+  const handleGuess = (
+    sourceSquare: string,
+    targetSquare: string,
+    piece: string,
+  ) => {
+    const move = `${sourceSquare}${targetSquare}`;
+    const promotionPiece = piece[1].toLowerCase(); // 'wN' -> 'n'
+    const moveWithPromotionPiece = `${move}${promotionPiece}`;
+    const isCorrect =
+      position.judgeGuess(move) || position.judgeGuess(moveWithPromotionPiece);
+    return isCorrect;
+  };
+  z;
   return (
     <HighlightChessboard
-      kingSquare={kingSquare}
-      isCheck={isCheck}
+      checkSquare={checkSquare}
       hintSquare={hintSquare}
       incorrectMoveSquare={incorrectMoveSquare}
       onPieceDrop={onPieceDrop}

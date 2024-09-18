@@ -31,7 +31,7 @@ export abstract class Position implements Traversable, Quizable {
     return false;
   }
 
-  guess(move: string): boolean {
+  judgeGuess(move: string): boolean {
     console.log(`all moves ${this.moves} ---- your move ${move}`);
     return this.moves[this.i] === move;
   }
