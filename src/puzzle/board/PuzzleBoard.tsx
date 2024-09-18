@@ -1,7 +1,5 @@
 import React from 'react';
-import { Chessboard } from 'react-chessboard';
-import useCheckHighlighting from './useCheckHighlighting';
-import useFeedbackHighlighting from './useFeedbackHighlighting';
+import HighlightChessboard from './HighlightChessboard';
 
 // Define the props interface directly inside the PuzzleBoard component file
 export interface PuzzleBoardProps {
@@ -23,11 +21,11 @@ const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   onCorrectDrop,
   onIncorrectDrop,
 }) => {
-  const checkStyles = useCheckHighlighting(kingSquare, isCheck);
-  const feedbackStyles = useFeedbackHighlighting(hintSquare, incorrectMoveSquare);
-  const customSquareStyles = { ...checkStyles, ...feedbackStyles };
-
-  const onPieceDrop = (sourceSquare: string, targetSquare: string, piece: string) => {
+  const onPieceDrop = (
+    sourceSquare: string,
+    targetSquare: string,
+    piece: string,
+  ) => {
     const isCorrect = onCorrectDrop(sourceSquare, targetSquare, piece);
     if (!isCorrect) {
       onIncorrectDrop(sourceSquare, targetSquare, piece);
@@ -36,8 +34,11 @@ const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   };
 
   return (
-    <Chessboard
-      customSquareStyles={customSquareStyles}
+    <HighlightChessboard
+      kingSquare={kingSquare}
+      isCheck={isCheck}
+      hintSquare={hintSquare}
+      incorrectMoveSquare={incorrectMoveSquare}
       onPieceDrop={onPieceDrop}
       position={fen}
     />

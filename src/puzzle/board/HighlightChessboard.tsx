@@ -4,7 +4,7 @@ import { Chessboard } from 'react-chessboard';
 const getCheckHighlighting = (kingSquare: string, isCheck: boolean) => {
   const styles: Record<string, any> = {};
   if (isCheck) {
-    styles.kingSquare = { backgroundColor: 'red' };
+    styles[kingSquare] = { backgroundColor: 'red' };
   }
   return styles;
 };
@@ -15,10 +15,10 @@ const getFeedbackHighlighting = (
 ) => {
   const styles: Record<string, any> = {};
   if (hintSquare) {
-    styles.hintSquare = { backgroundColor: '#77b1d4' };
+    styles[hintSquare] = { backgroundColor: '#77b1d4' };
   }
   if (incorrectMoveSquare) {
-    styles.incorrectMoveSquare = { backgroundColor: '#ff7f7f' };
+    styles[incorrectMoveSquare] = { backgroundColor: '#ff7f7f' };
   }
   return styles;
 };
@@ -28,6 +28,7 @@ export interface HighlightChessboardProps {
   isCheck: boolean;
   hintSquare: string | null;
   incorrectMoveSquare: string | null;
+  [key: string]: any;
 }
 
 const HighlightChessboard = ({
@@ -43,6 +44,7 @@ const HighlightChessboard = ({
     incorrectMoveSquare,
   );
   const customSquareStyles = { ...checkStyles, ...feedbackStyles };
+  console.log(customSquareStyles);
 
   return <Chessboard customSquareStyles={customSquareStyles} {...props} />;
 };
