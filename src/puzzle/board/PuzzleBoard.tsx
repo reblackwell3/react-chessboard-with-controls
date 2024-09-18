@@ -4,7 +4,7 @@ import useFeedbackHighlighting from './useFeedbackHighlighting';
 import { Chessboard } from 'react-chessboard';
 
 const PuzzleBoard = ({ 
-    puzzle,  onCorrectDrop, 
+    fen, moves, moveNum, incMoveNum,  onCorrectDrop, 
     onIncorrectDrop }) => {
 
         const checkStyles = useCheckHighlighting(puzzle.kingSquare, puzzle.isCheck);

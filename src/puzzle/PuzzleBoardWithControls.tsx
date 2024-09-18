@@ -1,41 +1,82 @@
-import React from 'react';
-import Chessboard from 'react-chessboard';
-import PuzzleControls from './controls/PuzzleControls';
-import withHighlighting from './board/withHighlighting';
-import withDefaultActions from './board/withDefaultActions';
+import React, { useEffect, useState } from 'react';
+import PuzzleBoard from './PuzzleBoard';
+import PuzzleControls from './PuzzleControls';
 
-// Combine decorators
-const EnhancedPuzzleBoard = withHighlighting(withDefaultActions(Chessboard));
+const PuzzleBoardWithControls = ({ apiProxy }) => {
+  const { onFetch, onNext, onDropFeedback, onHintFeedback } = apiProxy;
 
-const PuzzleBoardWithControls = ({ 
-    usePuzzle, onHint, onCorrectDrop, 
-    onIncorrectDrop, onNextCorrect, 
-    onNextIncorrect 
-}) => {
+  const [initialFen, setInitialFen] = useState(null);
+  const [moves, setMoves] = useState([]);
+  const [feedback, setFeedback] = useState({});
 
-    const [puzzle, incPuzzleNum] = usePuzzle();
+  useEffect(() => {
+    if (onFetch) {
+      // Fetch data using the provided API
+      onFetch().then((data) => {
+        setInitialFen(data.initialFen || null);
+        setMoves(data.moves || []);
+      });
+    }
+  }, [onFetch]);
 
-    return (
-        <>
-          <EnhancedPuzzleBoard
-            position={puzzle.position}
-            onCorrectDrop={onCorrectDrop}
-            onIncorrectDrop={onIncorrectDrop}
-            chessService={puzzle.chessService}
-          />
-          <PuzzleControls 
-            onHint={onHint} 
-            onNextCorrect={onNextCorrect} 
-            onNextIncorrect={onNextIncorrect} 
-            renderControls={(showHint, nextPuzzle) => (
-              <div>
-                <button onClick={showHint}>Hint</button>
-                <button onClick={nextPuzzle}>Next Puzzle</button>
-              </div>
-            )}
-          />
-        </>
-    );
+  const handlePieceDrop = (sourceSquare, targetSquare) => {
+    const move = { sourceSquare, targetSquare };
+
+    if (onDropFeedback) {
+      // Register the feedback when a piece is moved
+      const feedbackData = { move, status: 'correct' }; // Example feedback
+      onDropFeedback(feedbackData).then((response) => {
+        setFeedback(response); // Optionally handle response
+      });
+    }
+
+    // You could add any other logic here related to handling the move
+  };
+
+  const handleHintRequest = (moveNumber) => {
+    if (onHintFeedback) {
+      // Handle hint request feedback
+      onHintFeedback(moveNumber).then((response) => {
+        // Optionally handle response
+      });
+    }
+  };
+
+  const handleNextPuzzle = () => {
+    if (onNext) {
+      // Post feedback on puzzle completion
+      onNext().then(() => {
+        // Optionally reset state or load new puzzle
+      });
+    }
+  };
+
+  return (
+    <div className="puzzle-board-with-controls">
+      {initialFen && (
+        <PuzzleBoard
+          fen={initialFen}
+          moves={moves}
+          onPieceDrop={handlePieceDrop}
+        />
+      )}
+      <PuzzleControls
+        onNext={handleNextPuzzle}
+        onHint={handleHintRequest}
+        feedback={feedback}
+      />
+    </div>
+  );
+};
+
+// Define default empty methods to prevent breaking if not provided
+PuzzleBoardWithControls.defaultProps = {
+  apiProxy: {
+    onFetch: () => Promise.resolve({}),
+    onNext: () => Promise.resolve(),
+    onDropFeedback: () => Promise.resolve(),
+    onHintFeedback: () => Promise.resolve(),
+  },
 };
 
 export default PuzzleBoardWithControls;
