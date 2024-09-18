@@ -60,3 +60,4 @@ export const WithHint: Story = {
     onIncorrectDrop: handleIncorrectDrop,
   },
 };
+

@@ -1,0 +1,20 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:storybook/recommended"
+  ],
+  "plugins": ["react", "@typescript-eslint", "prettier", "jest"],
+  "env": {
+    "jest/globals": true,
+    "node": true,
+    "es2021": true
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "curly": ["error", "multi-line"]
+  }
+}
