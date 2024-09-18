@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 
-const useFeedbackHighlighting = (hintSquare, incorrectMoveSquare) => {
+const useFeedbackHighlighting = (hintSquare: string | null, incorrectMoveSquare: string | null) => {
   const [hintStyles, setHintStyles] = useState({});
   const [incorrectMoveStyles, setIncorrectMovesStyles] = useState({});
 

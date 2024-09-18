@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 
-const useChecktHighlighting = (kingSquare, isCheck) => {
+const useCheckHighlighting = (kingSquare: string, isCheck: boolean) => {
   const [checkStyles, setCheckStyles] = useState({});
 
   useLayoutEffect(() => {
@@ -16,4 +16,4 @@ const useChecktHighlighting = (kingSquare, isCheck) => {
   return checkStyles;
 };
 
-export default useChecktHighlighting;
+export default useCheckHighlighting;
