@@ -1,6 +1,6 @@
 import React from 'react';
 import HighlightChessboard from './HighlightChessboard';
-import { PuzzlePosition } from '../../position/Position';
+import { PuzzlePosition } from '../position/Position';
 
 // Define the props interface directly inside the PuzzleBoard component file
 export interface PuzzleBoardProps {

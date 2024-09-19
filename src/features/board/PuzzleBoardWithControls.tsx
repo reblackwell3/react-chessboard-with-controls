@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PuzzleBoard from './board/PuzzleBoard';
-import { PuzzlePosition } from '../position/Position';
+import { PuzzlePosition } from './position/Position';
 export interface PuzzleBoardWithControlsProps {
   apiProxy: {
     onFetch: () => Promise<any>;
@@ -11,6 +11,7 @@ export interface PuzzleBoardWithControlsProps {
   renderControls: (
     showHint: () => void,
     nextPuzzle: () => void,
+    isFinished: boolean,
   ) => React.ReactNode;
 }
 
@@ -70,7 +71,11 @@ const PuzzleBoardWithControls = ({
           incInteractionNum={incInteractionNum}
         />
       )}
-      {renderControls(handleHintRequest, handleNextPuzzle)}
+      {renderControls(
+        handleHintRequest,
+        handleNextPuzzle,
+        position.isFinished(),
+      )}
     </div>
   );
 };

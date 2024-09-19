@@ -31,6 +31,10 @@ export abstract class Position implements Traversable {
     return false;
   }
 
+  isFinished(): boolean {
+    return this.i >= this.moves.length;
+  }
+
   fen(): string {
     return this.chess.fen();
   }

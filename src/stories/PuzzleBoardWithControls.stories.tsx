@@ -2,8 +2,8 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import PuzzleBoardWithControls, {
   PuzzleBoardWithControlsProps,
-} from '../puzzle/PuzzleBoardWithControls';
-import { PuzzlePosition } from '../position/Position';
+} from '../PuzzleBoardWithControls';
+import { PuzzlePosition } from '../features/position/Position';
 
 // Define metadata for the PuzzleBoardWithControls component
 const meta: Meta<typeof PuzzleBoardWithControls> = {
@@ -54,11 +54,16 @@ const apiProxy = {
   onHintFeedback: () => Promise.resolve({}),
 };
 
-const renderControls = (showHint: () => void, nextPuzzle: () => void) => {
+const renderControls = (
+  showHint: () => void,
+  nextPuzzle: () => void,
+  isFinished: boolean,
+) => {
   return (
     <div>
       <button onClick={showHint}>Show Hint</button>
       <button onClick={nextPuzzle}>Next Puzzle</button>
+      {isFinished && <button>Finished!</button>}
     </div>
   );
 };

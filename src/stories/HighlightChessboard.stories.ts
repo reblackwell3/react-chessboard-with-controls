@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
-import HighlightChessboard, { HighlightChessboardProps } from '../puzzle/board/HighlightChessboard';
+import HighlightChessboard, {
+  HighlightChessboardProps,
+} from '../features/board/HighlightChessboard';
 
 // Define metadata for the HighlightChessboard component
 const meta: Meta<typeof HighlightChessboard> = {
@@ -44,11 +46,10 @@ export const WithHint: Story = {
 
 // Define the story with a hint square
 export const incorrectMoveSquare: Story = {
-    args: {
-      kingSquare: 'e1',
-      isCheck: false,
-      hintSquare: null,
-      incorrectMoveSquare: 'e7',
-    },
-  };
-  
+  args: {
+    kingSquare: 'e1',
+    isCheck: false,
+    hintSquare: null,
+    incorrectMoveSquare: 'e7',
+  },
+};

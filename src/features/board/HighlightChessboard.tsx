@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chessboard } from 'react-chessboard';
+import DarkChessboard from './DarkChessboard';
 
 const getCheckHighlighting = (checkSquare: string) => {
   const styles: Record<string, any> = {};
@@ -42,7 +42,7 @@ const HighlightChessboard = ({
   const customSquareStyles = { ...checkStyles, ...feedbackStyles };
   console.log(customSquareStyles);
 
-  return <Chessboard customSquareStyles={customSquareStyles} {...props} />;
+  return <DarkChessboard customSquareStyles={customSquareStyles} {...props} />;
 };
 
 export default HighlightChessboard;
