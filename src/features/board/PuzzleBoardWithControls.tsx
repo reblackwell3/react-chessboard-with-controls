@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import PuzzleBoard from './board/PuzzleBoard';
-import { PuzzlePosition } from './position/Position';
+import PuzzleBoard from './PuzzleBoard';
+import { PuzzlePosition } from '../position/Position';
 export interface PuzzleBoardWithControlsProps {
   apiProxy: {
     onFetch: () => Promise<any>;

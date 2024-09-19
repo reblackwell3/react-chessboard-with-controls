@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import PuzzleBoardWithControls, {
   PuzzleBoardWithControlsProps,
-} from '../PuzzleBoardWithControls';
+} from '../features/board/PuzzleBoardWithControls';
 import { PuzzlePosition } from '../features/position/Position';
 
 // Define metadata for the PuzzleBoardWithControls component
