@@ -2,11 +2,13 @@ import { Meta, StoryObj } from '@storybook/react';
 import HighlightChessboard, {
   HighlightChessboardProps,
 } from '../features/board/HighlightChessboard';
+import withThemeProvider from './withThemeProvider';
 
 // Define metadata for the HighlightChessboard component
 const meta: Meta<typeof HighlightChessboard> = {
   title: 'HighlightChessboard',
   component: HighlightChessboard,
+  decorators: [withThemeProvider],
 };
 
 export default meta;

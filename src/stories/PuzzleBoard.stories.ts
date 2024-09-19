@@ -1,11 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
 import PuzzleBoard, { PuzzleBoardProps } from '../features/board/PuzzleBoard';
 import { PuzzlePosition } from '../features/position/Position';
+import withThemeProvider from './withThemeProvider';
 
 // Define metadata for the PuzzleBoard component
 const meta: Meta<typeof PuzzleBoard> = {
   title: 'PuzzleBoard',
   component: PuzzleBoard,
+  decorators: [withThemeProvider],
 };
 
 export default meta;
