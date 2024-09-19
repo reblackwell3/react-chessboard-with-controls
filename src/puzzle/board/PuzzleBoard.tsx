@@ -1,33 +1,22 @@
 import React from 'react';
 import HighlightChessboard from './HighlightChessboard';
-import { FenPosition } from '../../position/Position';
+import { PuzzlePosition } from '../../position/Position';
 
 // Define the props interface directly inside the PuzzleBoard component file
 export interface PuzzleBoardProps {
-  fen: string;
-  isCheck: boolean;
+  position: PuzzlePosition;
   hintSquare: string | null;
-  onCorrectDrop: (source: string, target: string, piece: string) => boolean;
+  onCorrectDrop: (source: string, target: string, piece: string) => void;
   onIncorrectDrop: (source: string, target: string, piece: string) => void;
   incorrectMoveSquare: string | null;
   setIncorrectMoveSquare: (square: string | null) => void;
-  moves: string[];
-  moveIndex: number;
-  incMoveIndex: () => void;
 }
 
 const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
-  fen,
-  hintSquare,
+  position,
   onCorrectDrop,
   onIncorrectDrop,
-  incorrectMoveSquare,
-  setIncorrectMoveSquare,
-  moves,
 }) => {
-  const position = new FenPosition(fen, moves);
-  const checkSquare = position.getCheckSquare();
-
   const onPieceDrop = (
     sourceSquare: string,
     targetSquare: string,
@@ -35,14 +24,13 @@ const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
   ) => {
     const isCorrect = handleGuess(sourceSquare, targetSquare, piece);
     if (isCorrect) {
-      onCorrectDrop(sourceSquare, targetSquare, piece);
+      position.isCorrectMove(true);
       position.next();
       setTimeout(() => {
         position.next();
       }, 500);
     } else {
-      onIncorrectDrop(sourceSquare, targetSquare, piece);
-      setIncorrectMoveSquare(targetSquare);
+      position.isCorrectMove(false);
     }
     return isCorrect;
   };
@@ -59,14 +47,14 @@ const PuzzleBoard: React.FC<PuzzleBoardProps> = ({
       position.judgeGuess(move) || position.judgeGuess(moveWithPromotionPiece);
     return isCorrect;
   };
-  z;
+
   return (
     <HighlightChessboard
-      checkSquare={checkSquare}
-      hintSquare={hintSquare}
-      incorrectMoveSquare={incorrectMoveSquare}
+      checkSquare={position.checkSquare()}
+      hintSquare={position.hintSquare()}
+      incorrectMoveSquare={position.incorrectMoveSquare()}
       onPieceDrop={onPieceDrop}
-      position={fen}
+      position={position.fen()}
     />
   );
 };

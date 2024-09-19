@@ -31,12 +31,11 @@ export abstract class Position implements Traversable, Quizable {
     return false;
   }
 
-  judgeGuess(move: string): boolean {
-    console.log(`all moves ${this.moves} ---- your move ${move}`);
-    return this.moves[this.i] === move;
+  fen(): string {
+    return this.chess.fen();
   }
 
-  getCheckSquare(): string {
+  checkSquare(): string {
     if (!this.chess.inCheck()) {
       return '';
     }
@@ -62,26 +61,45 @@ export abstract class Position implements Traversable, Quizable {
 
     return kingSquare;
   }
-
-  hint(): string {
-    return this.moves[this.i];
-  }
-
-  fen(): string {
-    return this.chess.fen();
-  }
 }
 
-export class FenPosition extends Position {
+export class PuzzlePosition extends Position {
+  protected isCorrect: boolean = false;
+  protected guessedMove: string = '';
   constructor(initialFEN: string, moves: string[]) {
     super();
     this.chess.load(initialFEN);
     this.moves = moves;
     // console.log(`fen: ${initialFEN} moves: ${moves}`);
   }
+
+  judgeGuess(move: string): boolean {
+    this.guessedMove = move;
+    console.log(`all moves ${this.moves} ---- your move ${move}`);
+    return this.moves[this.i] === move;
+  }
+
+  hintSquare(): string {
+    return this.hint().slice(0, 2);
+  }
+
+  private hint(): string {
+    return this.moves[this.i];
+  }
+
+  isCorrectMove(isCorrect: boolean): void {
+    this.isCorrect = isCorrect;
+  }
+
+  incorrectMoveSquare(): string {
+    if (this.isCorrect) {
+      return '';
+    }
+    return this.guessedMove.slice(2, 4);
+  }
 }
 
-export class PgnPosition extends Position {
+export class GamePosition extends Position {
   constructor(PGN: string) {
     super();
     console.log(`pgn: ${PGN}`);
