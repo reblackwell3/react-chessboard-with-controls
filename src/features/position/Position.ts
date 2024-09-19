@@ -1,8 +1,7 @@
 import { Traversable } from './Traversable';
-import { Quizable } from './Quizable';
 import { Chess } from 'chess.js';
 
-export abstract class Position implements Traversable, Quizable {
+export abstract class Position implements Traversable {
   protected chess: Chess;
   protected moves: string[];
   protected i: number = 0;
@@ -14,6 +13,7 @@ export abstract class Position implements Traversable, Quizable {
 
   // Common methods shared by all positions
   next(): boolean {
+    console.log(`next ${this.i} ${this.moves.length}`);
     if (this.i < this.moves.length) {
       this.chess.move(this.moves[this.i]);
       this.i++;
@@ -31,9 +31,12 @@ export abstract class Position implements Traversable, Quizable {
     return false;
   }
 
-  guess(move: string): boolean {
-    console.log(`all moves ${this.moves} ---- your move ${move}`);
-    return this.moves[this.i] === move;
+  isFinished(): boolean {
+    return this.i >= this.moves.length;
+  }
+
+  fen(): string {
+    return this.chess.fen();
   }
 
   getCheckSquare(): string {
@@ -62,26 +65,71 @@ export abstract class Position implements Traversable, Quizable {
 
     return kingSquare;
   }
-
-  hint(): string {
-    return this.moves[this.i];
-  }
-
-  fen(): string {
-    return this.chess.fen();
-  }
 }
 
-export class FenPosition extends Position {
+export class PuzzlePosition extends Position {
+  protected isCorrect: boolean = false;
+  protected guessedMove: string = '';
+  protected isHintWanted: boolean = false;
+  protected playerColor: string;
   constructor(initialFEN: string, moves: string[]) {
     super();
     this.chess.load(initialFEN);
     this.moves = moves;
+    this.playerColor = this.chess.turn() === 'b' ? 'white' : 'black';
+    console.log(`player color: ${this.playerColor}`);
     // console.log(`fen: ${initialFEN} moves: ${moves}`);
+  }
+
+  judgeGuess = (sourceSquare: string, targetSquare: string, piece: string) => {
+    const move = `${sourceSquare}${targetSquare}`;
+    const promotionPiece = piece[1].toLowerCase(); // 'wN' -> 'n'
+    const moveWithPromotionPiece = `${move}${promotionPiece}`;
+    const isCorrect =
+      this.judgeMove(move) || this.judgeMove(moveWithPromotionPiece);
+    this.isCorrect = isCorrect;
+    return isCorrect;
+  };
+
+  resetInteractions(): void {
+    this.guessedMove = '';
+    this.isHintWanted = false;
+  }
+
+  private judgeMove(move: string): boolean {
+    this.guessedMove = move;
+    console.log(`all moves ${this.moves} ---- your move ${move}`);
+    return this.moves[this.i] === move;
+  }
+
+  wantsHint(wants: boolean): void {
+    this.isHintWanted = wants;
+  }
+
+  getHintSquare(): string {
+    if (!this.isHintWanted) {
+      return '';
+    }
+    return this.hint().slice(0, 2);
+  }
+
+  private hint(): string {
+    return this.moves[this.i];
+  }
+
+  getIncorrectMoveSquare(): string {
+    if (this.isCorrect) {
+      return '';
+    }
+    return this.guessedMove.slice(2, 4);
+  }
+
+  getPlayerColor(): string {
+    return this.playerColor;
   }
 }
 
-export class PgnPosition extends Position {
+export class GamePosition extends Position {
   constructor(PGN: string) {
     super();
     console.log(`pgn: ${PGN}`);
