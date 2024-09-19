@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PuzzleBoard from './PuzzleBoard';
 import { PuzzlePosition } from '../position/Position';
+import { ThemeProvider } from '../theme/ThemeProvider';
 export interface PuzzleBoardWithControlsProps {
+  theme: 'light' | 'dark';
   apiProxy: {
     onFetch: () => Promise<any>;
     onNext: () => Promise<any>;
@@ -16,6 +18,7 @@ export interface PuzzleBoardWithControlsProps {
 }
 
 const PuzzleBoardWithControls = ({
+  theme,
   apiProxy,
   renderControls,
 }: PuzzleBoardWithControlsProps) => {
@@ -64,19 +67,21 @@ const PuzzleBoardWithControls = ({
   };
 
   return (
-    <div className="puzzle-board-with-controls">
-      {position && (
-        <PuzzleBoard
-          position={position}
-          incInteractionNum={incInteractionNum}
-        />
-      )}
-      {renderControls(
-        handleHintRequest,
-        handleNextPuzzle,
-        position.isFinished(),
-      )}
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="puzzle-board-with-controls">
+        {position && (
+          <PuzzleBoard
+            position={position}
+            incInteractionNum={incInteractionNum}
+          />
+        )}
+        {renderControls(
+          handleHintRequest,
+          handleNextPuzzle,
+          position.isFinished(),
+        )}
+      </div>
+    </ThemeProvider>
   );
 };
 

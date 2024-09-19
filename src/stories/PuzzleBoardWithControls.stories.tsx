@@ -13,28 +13,6 @@ const meta: Meta<typeof PuzzleBoardWithControls> = {
 
 export default meta;
 
-// Mock functions for drop handling
-const handleCorrectDrop = (
-  sourceSquare: string,
-  targetSquare: string,
-  piece: string,
-) => {
-  console.log(
-    `Correct move from ${sourceSquare} to ${targetSquare}, with piece ${piece}`,
-  );
-  return true; // Indicate a correct move
-};
-
-const handleIncorrectDrop = (
-  sourceSquare: string,
-  targetSquare: string,
-  piece: string,
-) => {
-  console.log(
-    `Incorrect move from ${sourceSquare} to ${targetSquare}, with piece ${piece}`,
-  );
-};
-
 // Define a type alias for stories
 type Story = StoryObj<typeof PuzzleBoardWithControls>;
 
@@ -71,6 +49,7 @@ const renderControls = (
 // Define the default story with mock data
 export const Default: Story = {
   args: {
+    theme: 'light',
     apiProxy: apiProxy,
     renderControls: renderControls,
   } as PuzzleBoardWithControlsProps,
@@ -113,6 +92,7 @@ const multiplePuzzlesApiProxy = {
 
 export const MultiplePuzzles: Story = {
   args: {
+    theme: 'dark',
     apiProxy: multiplePuzzlesApiProxy,
     renderControls: renderControls,
   } as PuzzleBoardWithControlsProps,
