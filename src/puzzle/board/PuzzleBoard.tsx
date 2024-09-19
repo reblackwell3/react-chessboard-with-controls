@@ -16,6 +16,10 @@ const PuzzleBoard = ({ position, incInteractionNum }: PuzzleBoardProps) => {
   ) => {
     const isCorrect = position.judgeGuess(sourceSquare, targetSquare, piece);
     incInteractionNum();
+    setTimeout(() => {
+      position.resetInteractions();
+      incInteractionNum();
+    }, 500);
     // placeholder for apiProxy.onDropFeedback() call
     if (isCorrect) {
       position.next();
@@ -30,11 +34,12 @@ const PuzzleBoard = ({ position, incInteractionNum }: PuzzleBoardProps) => {
 
   return (
     <HighlightChessboard
-      checkSquare={position.checkSquare()}
-      hintSquare={position.hintSquare()}
-      incorrectMoveSquare={position.incorrectMoveSquare()}
+      checkSquare={position.getCheckSquare()}
+      hintSquare={position.getHintSquare()}
+      incorrectMoveSquare={position.getIncorrectMoveSquare()}
       onPieceDrop={onPieceDrop}
       position={position.fen()}
+      boardOrientation={position.getPlayerColor()}
     />
   );
 };

@@ -34,13 +34,24 @@ const PuzzleBoardWithControls = ({
 
   useEffect(() => {
     onFetch().then((data) => {
-      setPosition(new PuzzlePosition(data.fen, data.moves));
+      setPosition(() => {
+        const newPosition = new PuzzlePosition(data.fen, data.moves);
+        setTimeout(() => {
+          newPosition.next();
+          incInteractionNum();
+        }, 500);
+        return newPosition;
+      });
     });
   }, [puzzleNum]);
 
   const handleHintRequest = () => {
     position.wantsHint(true);
     incInteractionNum();
+    setTimeout(() => {
+      position.resetInteractions();
+      incInteractionNum();
+    }, 500);
     // placeholder for apiProxy.onHintFeedback() call
   };
 

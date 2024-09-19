@@ -13,6 +13,7 @@ export abstract class Position implements Traversable {
 
   // Common methods shared by all positions
   next(): boolean {
+    console.log(`next ${this.i} ${this.moves.length}`);
     if (this.i < this.moves.length) {
       this.chess.move(this.moves[this.i]);
       this.i++;
@@ -34,7 +35,7 @@ export abstract class Position implements Traversable {
     return this.chess.fen();
   }
 
-  checkSquare(): string {
+  getCheckSquare(): string {
     if (!this.chess.inCheck()) {
       return '';
     }
@@ -66,10 +67,13 @@ export class PuzzlePosition extends Position {
   protected isCorrect: boolean = false;
   protected guessedMove: string = '';
   protected isHintWanted: boolean = false;
+  protected playerColor: string;
   constructor(initialFEN: string, moves: string[]) {
     super();
     this.chess.load(initialFEN);
     this.moves = moves;
+    this.playerColor = this.chess.turn() === 'b' ? 'white' : 'black';
+    console.log(`player color: ${this.playerColor}`);
     // console.log(`fen: ${initialFEN} moves: ${moves}`);
   }
 
@@ -79,8 +83,14 @@ export class PuzzlePosition extends Position {
     const moveWithPromotionPiece = `${move}${promotionPiece}`;
     const isCorrect =
       this.judgeMove(move) || this.judgeMove(moveWithPromotionPiece);
+    this.isCorrect = isCorrect;
     return isCorrect;
   };
+
+  resetInteractions(): void {
+    this.guessedMove = '';
+    this.isHintWanted = false;
+  }
 
   private judgeMove(move: string): boolean {
     this.guessedMove = move;
@@ -92,7 +102,7 @@ export class PuzzlePosition extends Position {
     this.isHintWanted = wants;
   }
 
-  hintSquare(): string {
+  getHintSquare(): string {
     if (!this.isHintWanted) {
       return '';
     }
@@ -103,15 +113,15 @@ export class PuzzlePosition extends Position {
     return this.moves[this.i];
   }
 
-  isCorrectMove(isCorrect: boolean): void {
-    this.isCorrect = isCorrect;
-  }
-
-  incorrectMoveSquare(): string {
+  getIncorrectMoveSquare(): string {
     if (this.isCorrect) {
       return '';
     }
     return this.guessedMove.slice(2, 4);
+  }
+
+  getPlayerColor(): string {
+    return this.playerColor;
   }
 }
 
