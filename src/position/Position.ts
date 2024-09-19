@@ -63,9 +63,10 @@ export abstract class Position implements Traversable {
   }
 }
 
-export class PuzzlePosition extends Position implements Quizable {
+export class PuzzlePosition extends Position {
   protected isCorrect: boolean = false;
   protected guessedMove: string = '';
+  protected isHintWanted: boolean = false;
   constructor(initialFEN: string, moves: string[]) {
     super();
     this.chess.load(initialFEN);
@@ -73,13 +74,29 @@ export class PuzzlePosition extends Position implements Quizable {
     // console.log(`fen: ${initialFEN} moves: ${moves}`);
   }
 
-  judgeGuess(move: string): boolean {
+  judgeGuess = (sourceSquare: string, targetSquare: string, piece: string) => {
+    const move = `${sourceSquare}${targetSquare}`;
+    const promotionPiece = piece[1].toLowerCase(); // 'wN' -> 'n'
+    const moveWithPromotionPiece = `${move}${promotionPiece}`;
+    const isCorrect =
+      this.judgeMove(move) || this.judgeMove(moveWithPromotionPiece);
+    return isCorrect;
+  };
+
+  private judgeMove(move: string): boolean {
     this.guessedMove = move;
     console.log(`all moves ${this.moves} ---- your move ${move}`);
     return this.moves[this.i] === move;
   }
 
+  wantsHint(wants: boolean): void {
+    this.isHintWanted = wants;
+  }
+
   hintSquare(): string {
+    if (!this.isHintWanted) {
+      return '';
+    }
     return this.hint().slice(0, 2);
   }
 
