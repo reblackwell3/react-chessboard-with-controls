@@ -7,13 +7,14 @@ export interface PuzzleBoardProps {
   position: PuzzlePosition;
 }
 
-const PuzzleBoard: React.FC<PuzzleBoardProps> = ({ position }) => {
+const PuzzleBoard = ({ position }: PuzzleBoardProps) => {
   const onPieceDrop = (
     sourceSquare: string,
     targetSquare: string,
     piece: string,
   ) => {
     const isCorrect = position.judgeGuess(sourceSquare, targetSquare, piece);
+    // placeholder for apiProxy.onDropFeedback() call
     if (isCorrect) {
       position.next();
       setTimeout(() => {

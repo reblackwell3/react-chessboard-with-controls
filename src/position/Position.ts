@@ -1,5 +1,4 @@
 import { Traversable } from './Traversable';
-import { Quizable } from './Quizable';
 import { Chess } from 'chess.js';
 
 export abstract class Position implements Traversable {

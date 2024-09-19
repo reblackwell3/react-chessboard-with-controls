@@ -1,82 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import PuzzleBoard from './PuzzleBoard';
-import PuzzleControls from './PuzzleControls';
+import PuzzleBoard from './board/PuzzleBoard';
+import { PuzzlePosition } from '../position/Position';
 
-const PuzzleBoardWithControls = ({ apiProxy }) => {
+export interface PuzzleBoardWithControlsProps {
+  initialFen: string;
+  moves: string[];
+  apiProxy: {
+    onFetch: () => Promise<any>;
+    onNext: () => Promise<any>;
+    onDropFeedback: (feedbackData: any) => Promise<any>;
+    onHintFeedback: (moveNumber: number) => Promise<any>;
+  };
+  renderControls: (
+    showHint: () => void,
+    nextPuzzle: () => void,
+  ) => React.ReactNode;
+}
+
+const PuzzleBoardWithControls = ({
+  initialFen,
+  moves,
+  apiProxy,
+  renderControls,
+}: PuzzleBoardWithControlsProps) => {
   const { onFetch, onNext, onDropFeedback, onHintFeedback } = apiProxy;
 
-  const [initialFen, setInitialFen] = useState(null);
-  const [moves, setMoves] = useState([]);
-  const [feedback, setFeedback] = useState({});
+  const [position, setPosition] = useState(
+    new PuzzlePosition(initialFen, moves),
+  );
+  // const [feedback, setFeedback] = useState({});
+  // placeholder for feedback
+  const [puzzleNum, setPuzzleNum] = useState(0);
 
   useEffect(() => {
-    if (onFetch) {
-      // Fetch data using the provided API
-      onFetch().then((data) => {
-        setInitialFen(data.initialFen || null);
-        setMoves(data.moves || []);
-      });
-    }
-  }, [onFetch]);
+    onFetch().then((data) => {
+      setPosition(new PuzzlePosition(data.fen, data.moves));
+    });
+  }, [puzzleNum]);
 
-  const handlePieceDrop = (sourceSquare, targetSquare) => {
-    const move = { sourceSquare, targetSquare };
-
-    if (onDropFeedback) {
-      // Register the feedback when a piece is moved
-      const feedbackData = { move, status: 'correct' }; // Example feedback
-      onDropFeedback(feedbackData).then((response) => {
-        setFeedback(response); // Optionally handle response
-      });
-    }
-
-    // You could add any other logic here related to handling the move
-  };
-
-  const handleHintRequest = (moveNumber) => {
-    if (onHintFeedback) {
-      // Handle hint request feedback
-      onHintFeedback(moveNumber).then((response) => {
-        // Optionally handle response
-      });
-    }
+  const handleHintRequest = () => {
+    position.wantsHint(true);
+    // placeholder for apiProxy.onHintFeedback() call
   };
 
   const handleNextPuzzle = () => {
-    if (onNext) {
-      // Post feedback on puzzle completion
-      onNext().then(() => {
-        // Optionally reset state or load new puzzle
-      });
-    }
+    setPuzzleNum((prevPuzzleNum) => prevPuzzleNum + 1);
+    // placeholder for apiProxy.onNext() call
   };
 
   return (
     <div className="puzzle-board-with-controls">
-      {initialFen && (
-        <PuzzleBoard
-          fen={initialFen}
-          moves={moves}
-          onPieceDrop={handlePieceDrop}
-        />
-      )}
-      <PuzzleControls
-        onNext={handleNextPuzzle}
-        onHint={handleHintRequest}
-        feedback={feedback}
-      />
+      {position && <PuzzleBoard position={position} />}
+      {renderControls(handleHintRequest, handleNextPuzzle)}
     </div>
   );
-};
-
-// Define default empty methods to prevent breaking if not provided
-PuzzleBoardWithControls.defaultProps = {
-  apiProxy: {
-    onFetch: () => Promise.resolve({}),
-    onNext: () => Promise.resolve(),
-    onDropFeedback: () => Promise.resolve(),
-    onHintFeedback: () => Promise.resolve(),
-  },
 };
 
 export default PuzzleBoardWithControls;
