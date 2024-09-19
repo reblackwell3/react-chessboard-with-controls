@@ -1,6 +1,6 @@
 export interface Quizable {
-  // Method to guess the next move; returns true if correct, false otherwise
   judgeGuess(move: string): boolean;
-
-  hint(): string;
+  hintSquare(): string;
+  isCorrectMove(isCorrect: boolean): void;
+  incorrectMoveSquare(): string;
 }

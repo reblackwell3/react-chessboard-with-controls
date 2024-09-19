@@ -2,7 +2,7 @@ import { Traversable } from './Traversable';
 import { Quizable } from './Quizable';
 import { Chess } from 'chess.js';
 
-export abstract class Position implements Traversable, Quizable {
+export abstract class Position implements Traversable {
   protected chess: Chess;
   protected moves: string[];
   protected i: number = 0;
@@ -63,7 +63,7 @@ export abstract class Position implements Traversable, Quizable {
   }
 }
 
-export class PuzzlePosition extends Position {
+export class PuzzlePosition extends Position implements Quizable {
   protected isCorrect: boolean = false;
   protected guessedMove: string = '';
   constructor(initialFEN: string, moves: string[]) {
