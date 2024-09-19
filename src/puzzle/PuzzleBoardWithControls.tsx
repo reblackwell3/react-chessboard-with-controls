@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PuzzleBoard from './board/PuzzleBoard';
 import { PuzzlePosition } from '../position/Position';
 export interface PuzzleBoardWithControlsProps {
-  initialFen: string;
-  moves: string[];
   apiProxy: {
     onFetch: () => Promise<any>;
     onNext: () => Promise<any>;
@@ -34,6 +32,10 @@ const PuzzleBoardWithControls = ({
 
   useEffect(() => {
     onFetch().then((data) => {
+      if (!data || !data.fen || !data.moves) {
+        console.error('Invalid data fetched:', data);
+        return;
+      }
       setPosition(() => {
         const newPosition = new PuzzlePosition(data.fen, data.moves);
         setTimeout(() => {
