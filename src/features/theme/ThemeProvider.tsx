@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import ThemeContext, { getStylesForTheme } from './ThemeContext'; // Import ThemeContext from the correct file
+import { ThemeContext, getStylesForTheme } from './ThemeContext'; // Import ThemeContext from the correct file
 
 interface ThemeProviderProps {
   children?: ReactNode;

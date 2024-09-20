@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import PuzzleBoard from '../features/board/PuzzleBoard';
+import { PuzzleBoard } from '../features/board/PuzzleBoard';
 import { PuzzlePosition } from '../features/position/Position';
 import withThemeProvider from './withThemeProvider';
 

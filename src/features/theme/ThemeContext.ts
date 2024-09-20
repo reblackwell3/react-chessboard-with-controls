@@ -7,7 +7,9 @@ interface ThemeContextType {
 }
 
 // Create the context with an initial value of null
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(
+  undefined,
+);
 
 // Custom hook for easy theme access
 export const useTheme = () => {
@@ -32,5 +34,3 @@ export const getStylesForTheme = (theme: 'light' | 'dark') => {
     };
   }
 };
-
-export default ThemeContext;

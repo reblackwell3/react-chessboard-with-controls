@@ -1,6 +1,6 @@
 {
   "name": "react-chessboard-with-controls",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The React Chessboard with Controls used at endchess.training",
   "license": "MIT",
   "author": "Robert Blackwell",

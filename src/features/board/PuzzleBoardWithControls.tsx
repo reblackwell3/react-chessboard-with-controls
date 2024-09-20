@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PuzzleBoard from './PuzzleBoard';
+import { PuzzleBoard } from './PuzzleBoard';
 import { PuzzlePosition } from '../position/Position';
 import { ThemeProvider } from '../theme/ThemeProvider';
 export interface PuzzleBoardWithControlsProps {
@@ -17,7 +17,7 @@ export interface PuzzleBoardWithControlsProps {
   ) => React.ReactNode;
 }
 
-const PuzzleBoardWithControls = ({
+export const PuzzleBoardWithControls = ({
   theme,
   apiProxy,
   renderControls,
@@ -85,5 +85,3 @@ const PuzzleBoardWithControls = ({
     </ThemeProvider>
   );
 };
-
-export default PuzzleBoardWithControls;

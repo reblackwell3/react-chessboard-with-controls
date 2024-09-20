@@ -1,4 +1,4 @@
-import HighlightChessboard from './HighlightChessboard';
+import { HighlightChessboard } from './HighlightChessboard';
 import { PuzzlePosition } from '../position/Position';
 
 // Define the props interface directly inside the PuzzleBoard component file
@@ -7,7 +7,10 @@ export interface PuzzleBoardProps {
   incInteractionNum: () => void;
 }
 
-const PuzzleBoard = ({ position, incInteractionNum }: PuzzleBoardProps) => {
+export const PuzzleBoard = ({
+  position,
+  incInteractionNum,
+}: PuzzleBoardProps) => {
   const onPieceDrop = (
     sourceSquare: string,
     targetSquare: string,
@@ -42,5 +45,3 @@ const PuzzleBoard = ({ position, incInteractionNum }: PuzzleBoardProps) => {
     />
   );
 };
-
-export default PuzzleBoard;

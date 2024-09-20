@@ -28,7 +28,7 @@ export interface HighlightChessboardProps {
   [key: string]: any;
 }
 
-const HighlightChessboard = ({
+export const HighlightChessboard = ({
   checkSquare,
   hintSquare,
   incorrectMoveSquare,
@@ -53,4 +53,3 @@ const HighlightChessboard = ({
   );
 };
 
-export default HighlightChessboard;
