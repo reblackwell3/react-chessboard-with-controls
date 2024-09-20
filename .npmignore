@@ -13,8 +13,6 @@ node_modules/
 tsconfig.json
 .eslintrc.json
 
-src/stories
-
 # Ignore source map files
 *.d.ts.map
 *.js.map
@@ -22,3 +20,10 @@ src/stories
 # Do not ignore the dist directory and .d.ts files
 !dist/
 !dist/**/*.d.ts
+
+.storybook
+stories
+storybook-static
+.gitignore
+package-lock.json
+rollup.config.js

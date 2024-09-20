@@ -48,3 +48,4 @@ coverage/
 *.rar
 
 *storybook.log
+storybook-static
