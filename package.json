@@ -2,19 +2,35 @@
   "name": "react-chessboard-with-controls",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "react-scripts start",
+    "build": "npm run clean && react-scripts build",
+    "test": "jest --config jest.config.cjs",
+    "test:integration": "jest --config jest.config.integration.cjs",
+    "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reblackwell3/react-chessboard-with-controls.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reblackwell3/react-chessboard-with-controls/issues"
+  },
+  "homepage": "https://github.com/reblackwell3/react-chessboard-with-controls#readme",
   "dependencies": {
     "chess.js": "^1.0.0-beta.8",
     "react": "^18.3.1",
-    "react-chessboard": "^4.7.1"
+    "react-chessboard": "^4.7.1",
+    "react-scripts": "^5.0.1",
+    "typescript": "^5.6.2"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.9.0",
@@ -27,6 +43,7 @@
     "@storybook/react": "^8.2.9",
     "@storybook/react-vite": "^8.2.9",
     "@storybook/test": "^8.2.9",
+    "@types/typescript": "^2.0.0",
     "prop-types": "^15.8.1",
     "storybook": "^8.2.9"
   }

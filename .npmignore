@@ -13,6 +13,8 @@ node_modules/
 tsconfig.json
 .eslintrc.json
 
+src/stories
+
 # Ignore source map files
 *.d.ts.map
 *.js.map
