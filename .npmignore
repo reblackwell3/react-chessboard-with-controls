@@ -27,3 +27,6 @@ storybook-static
 .gitignore
 package-lock.json
 rollup.config.js
+rollup.config.mjs
+coverage
+*.tgz
