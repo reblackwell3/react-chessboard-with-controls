@@ -22,13 +22,14 @@ const PuzzleBoardWithControls = ({
   apiProxy,
   renderControls,
 }: PuzzleBoardWithControlsProps) => {
-  const { onFetch, onNext, onDropFeedback, onHintFeedback } = apiProxy;
+  // const { onFetch, onNext, onDropFeedback, onHintFeedback } = apiProxy;
+  const { onFetch } = apiProxy;
 
   const [position, setPosition] = useState(
     new PuzzlePosition('8/8/8/7K/k7/8/8/8 w - - 0 1', []),
   );
   const [puzzleNum, setPuzzleNum] = useState(0);
-  const [interactionNum, setInteractionNum] = useState(0);
+  const [, setInteractionNum] = useState(0);
 
   const incInteractionNum = () => {
     setInteractionNum((prev) => prev + 1);

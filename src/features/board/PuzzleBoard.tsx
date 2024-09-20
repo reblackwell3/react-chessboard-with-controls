@@ -1,4 +1,3 @@
-import React from 'react';
 import HighlightChessboard from './HighlightChessboard';
 import { PuzzlePosition } from '../position/Position';
 

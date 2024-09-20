@@ -1,7 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import HighlightChessboard, {
-  HighlightChessboardProps,
-} from '../features/board/HighlightChessboard';
+import HighlightChessboard from '../features/board/HighlightChessboard';
 import withThemeProvider from './withThemeProvider';
 
 // Define metadata for the HighlightChessboard component
