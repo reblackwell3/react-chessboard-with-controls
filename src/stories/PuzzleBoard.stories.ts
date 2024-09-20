@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import PuzzleBoard, { PuzzleBoardProps } from '../features/board/PuzzleBoard';
+import PuzzleBoard from '../features/board/PuzzleBoard';
 import { PuzzlePosition } from '../features/position/Position';
 import withThemeProvider from './withThemeProvider';
 
@@ -11,28 +11,6 @@ const meta: Meta<typeof PuzzleBoard> = {
 };
 
 export default meta;
-
-// Mock functions for drop handling
-const handleCorrectDrop = (
-  sourceSquare: string,
-  targetSquare: string,
-  piece: string,
-) => {
-  console.log(
-    `Correct move from ${sourceSquare} to ${targetSquare}, with piece ${piece}`,
-  );
-  return true; // Indicate a correct move
-};
-
-const handleIncorrectDrop = (
-  sourceSquare: string,
-  targetSquare: string,
-  piece: string,
-) => {
-  console.log(
-    `Incorrect move from ${sourceSquare} to ${targetSquare}, with piece ${piece}`,
-  );
-};
 
 // Define a type alias for stories
 type Story = StoryObj<typeof PuzzleBoard>;

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { createContext, useContext } from 'react';
 
 // Define the shape of the context
 interface ThemeContextType {

@@ -1,9 +1,7 @@
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import PuzzleBoardWithControls, {
   PuzzleBoardWithControlsProps,
 } from '../features/board/PuzzleBoardWithControls';
-import { PuzzlePosition } from '../features/position/Position';
 
 // Define metadata for the PuzzleBoardWithControls component
 const meta: Meta<typeof PuzzleBoardWithControls> = {
@@ -15,11 +13,6 @@ export default meta;
 
 // Define a type alias for stories
 type Story = StoryObj<typeof PuzzleBoardWithControls>;
-
-const defaultPosition = new PuzzlePosition(
-  'r6k/pp2r2p/4Rp1Q/3p4/8/1N1P2R1/PqP2bPP/7K b - - 0 24',
-  'f2g3 e6e7 b2b1 b3c1 b1c1 h6c1'.split(' '),
-);
 
 const apiProxy = {
   onFetch: () =>
