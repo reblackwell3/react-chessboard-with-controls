@@ -11,6 +11,10 @@ export abstract class Position implements Traversable {
     this.moves = [];
   }
 
+  getIndex(): number {
+    return this.i;
+  }
+
   // Common methods shared by all positions
   next(): boolean {
     console.log(`next ${this.i} ${this.moves.length}`);
