@@ -1,6 +1,6 @@
 {
   "name": "react-chessboard-with-controls",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "The React Chessboard with Controls used at endchess.training",
   "license": "MIT",
   "author": "Robert Blackwell",
@@ -60,7 +60,10 @@
     "@storybook/react-vite": "^8.2.9",
     "@storybook/test": "^8.2.9",
     "@types/typescript": "^2.0.0",
+    "@vitejs/plugin-react": "^4.3.1",
     "prop-types": "^15.8.1",
-    "storybook": "^8.2.9"
+    "storybook": "^8.2.9",
+    "storybook-dark-mode": "^4.0.2",
+    "vite-tsconfig-paths": "^5.0.1"
   }
 }

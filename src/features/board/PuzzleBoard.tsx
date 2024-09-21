@@ -4,11 +4,13 @@ import { PuzzlePosition } from '../position/Position';
 // Define the props interface directly inside the PuzzleBoard component file
 export interface PuzzleBoardProps {
   position: PuzzlePosition;
+  onFeedback: (feedbackData: any) => void;
   incInteractionNum: () => void;
 }
 
 export const PuzzleBoard = ({
   position,
+  onFeedback,
   incInteractionNum,
 }: PuzzleBoardProps) => {
   const onPieceDrop = (
@@ -17,6 +19,12 @@ export const PuzzleBoard = ({
     piece: string,
   ) => {
     const isCorrect = position.judgeGuess(sourceSquare, targetSquare, piece);
+    onFeedback({
+      index: position.getIndex(),
+      guess: { sourceSquare, targetSquare, piece },
+      isCorrect: isCorrect,
+      isFinished: position.isFinished(),
+    });
     incInteractionNum();
     setTimeout(() => {
       position.resetInteractions();

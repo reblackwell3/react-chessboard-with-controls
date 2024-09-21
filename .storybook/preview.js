@@ -1,6 +1,5 @@
-import { addDecorator } from '@storybook/react';
-import withThemeProvider from './path/to/withThemeProvider';
 /** @type { import('@storybook/react').Preview } */
+import withThemeProvider from '@stories/withThemeProvider';
 const preview = {
   parameters: {
     controls: {
@@ -10,8 +9,7 @@ const preview = {
       },
     },
   },
+  decorators: [withThemeProvider],
 };
-
-addDecorator(withThemeProvider);
 
 export default preview;

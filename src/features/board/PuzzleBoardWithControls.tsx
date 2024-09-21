@@ -5,10 +5,14 @@ import { ThemeProvider } from '../theme/ThemeProvider';
 export interface PuzzleBoardWithControlsProps {
   theme: 'light' | 'dark';
   apiProxy: {
-    onFetch: () => Promise<any>;
-    onNext: () => Promise<any>;
-    onDropFeedback: (feedbackData: any) => Promise<any>;
-    onHintFeedback: (moveNumber: number) => Promise<any>;
+    onFetch: () => Promise<{ fen: string; moves: string[] }>;
+    onFeedback: (feedbackData: {
+      index: number;
+      guess?: { sourceSquare: string; targetSquare: string; piece: string };
+      hintRequested?: boolean;
+      isCorrect?: boolean;
+      isFinished?: boolean;
+    }) => void;
   };
   renderControls: (
     showHint: () => void,
@@ -22,11 +26,10 @@ export const PuzzleBoardWithControls = ({
   apiProxy,
   renderControls,
 }: PuzzleBoardWithControlsProps) => {
-  // const { onFetch, onNext, onDropFeedback, onHintFeedback } = apiProxy;
-  const { onFetch } = apiProxy;
+  const { onFetch, onFeedback } = apiProxy;
 
   const [position, setPosition] = useState(
-    new PuzzlePosition('8/8/8/7K/k7/8/8/8 w - - 0 1', []),
+    () => new PuzzlePosition('8/8/8/7K/k7/8/8/8 w - - 0 1', []),
   );
   const [puzzleNum, setPuzzleNum] = useState(0);
   const [, setInteractionNum] = useState(0);
@@ -53,6 +56,7 @@ export const PuzzleBoardWithControls = ({
   }, [puzzleNum]);
 
   const handleHintRequest = () => {
+    onFeedback({ index: position.getIndex(), hintRequested: true });
     position.wantsHint(true);
     incInteractionNum();
     setTimeout(() => {
@@ -69,19 +73,18 @@ export const PuzzleBoardWithControls = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="puzzle-board-with-controls">
-        {position && (
-          <PuzzleBoard
-            position={position}
-            incInteractionNum={incInteractionNum}
-          />
-        )}
-        {renderControls(
-          handleHintRequest,
-          handleNextPuzzle,
-          position.isFinished(),
-        )}
-      </div>
+      {position && (
+        <PuzzleBoard
+          position={position}
+          onFeedback={onFeedback}
+          incInteractionNum={incInteractionNum}
+        />
+      )}
+      {renderControls(
+        handleHintRequest,
+        handleNextPuzzle,
+        position.isFinished(),
+      )}
     </ThemeProvider>
   );
 };

@@ -41,7 +41,6 @@ export const HighlightChessboard = ({
     incorrectMoveSquare,
   );
   const customSquareStyles = { ...checkStyles, ...feedbackStyles };
-  console.log(customSquareStyles);
 
   return (
     <Chessboard
@@ -52,4 +51,3 @@ export const HighlightChessboard = ({
     />
   );
 };
-
