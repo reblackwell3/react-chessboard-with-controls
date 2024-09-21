@@ -1,6 +1,6 @@
 /** @type { import('@storybook/react').Preview } */
 import { addDecorator } from '@storybook/react';
-import withThemeProvider from '@theme/withThemeProvider';
+import withThemeProvider from '@stories/withThemeProvider';
 const preview = {
   parameters: {
     controls: {
