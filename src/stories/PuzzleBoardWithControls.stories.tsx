@@ -22,8 +22,9 @@ const apiProxy = {
       moves: 'f2g3 e6e7 b2b1 b3c1 b1c1 h6c1'.split(' '),
     }),
   onNext: () => Promise.resolve({}),
-  onDropFeedback: () => Promise.resolve({}),
-  onHintFeedback: () => Promise.resolve({}),
+  onFeedback: (feedbackData: unknown) => {
+    console.log(feedbackData);
+  },
 };
 
 const renderControls = (
@@ -79,9 +80,9 @@ const fetchPuzzles = () => {
 
 const multiplePuzzlesApiProxy = {
   onFetch: fetchPuzzles(),
-  onNext: () => Promise.resolve({}),
-  onDropFeedback: () => Promise.resolve({}),
-  onHintFeedback: () => Promise.resolve({}),
+  onFeedback: (feedbackData: unknown) => {
+    console.log(feedbackData);
+  },
 };
 
 export const MultiplePuzzles: Story = {
