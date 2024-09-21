@@ -29,7 +29,7 @@ export const PuzzleBoardWithControls = ({
   const { onFetch, onFeedback } = apiProxy;
 
   const [position, setPosition] = useState(
-    new PuzzlePosition('8/8/8/7K/k7/8/8/8 w - - 0 1', []),
+    () => new PuzzlePosition('8/8/8/7K/k7/8/8/8 w - - 0 1', []),
   );
   const [puzzleNum, setPuzzleNum] = useState(0);
   const [, setInteractionNum] = useState(0);
