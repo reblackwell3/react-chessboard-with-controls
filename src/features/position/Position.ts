@@ -81,6 +81,9 @@ export class PuzzlePosition extends Position {
     this.chess.load(initialFEN);
     this.moves = moves;
     this.playerColor = this.chess.turn() === 'b' ? 'white' : 'black';
+    console.log(
+      `PuzzlePosition constructor called with FEN: ${initialFEN} and moves: ${moves}`,
+    );
     console.log(`player color: ${this.playerColor}`);
     // console.log(`fen: ${initialFEN} moves: ${moves}`);
   }

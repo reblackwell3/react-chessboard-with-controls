@@ -1,6 +1,6 @@
-import { addDecorator } from '@storybook/react';
-import withThemeProvider from './path/to/withThemeProvider';
 /** @type { import('@storybook/react').Preview } */
+import { addDecorator } from '@storybook/react';
+import withThemeProvider from '@theme/withThemeProvider';
 const preview = {
   parameters: {
     controls: {

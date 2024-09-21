@@ -45,6 +45,7 @@ export const PuzzleBoardWithControls = ({
         return;
       }
       setPosition(() => {
+        console.log('PuzzlePosition constructor called');
         const newPosition = new PuzzlePosition(data.fen, data.moves);
         setTimeout(() => {
           newPosition.next();
