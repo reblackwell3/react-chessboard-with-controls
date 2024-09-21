@@ -17,7 +17,6 @@ export abstract class Position implements Traversable {
 
   // Common methods shared by all positions
   next(): boolean {
-    console.log(`next ${this.i} ${this.moves.length}`);
     if (this.i < this.moves.length) {
       this.chess.move(this.moves[this.i]);
       this.i++;
@@ -81,11 +80,6 @@ export class PuzzlePosition extends Position {
     this.chess.load(initialFEN);
     this.moves = moves;
     this.playerColor = this.chess.turn() === 'b' ? 'white' : 'black';
-    console.log(
-      `PuzzlePosition constructor called with FEN: ${initialFEN} and moves: ${moves}`,
-    );
-    console.log(`player color: ${this.playerColor}`);
-    // console.log(`fen: ${initialFEN} moves: ${moves}`);
   }
 
   judgeGuess = (sourceSquare: string, targetSquare: string, piece: string) => {
@@ -105,7 +99,6 @@ export class PuzzlePosition extends Position {
 
   private judgeMove(move: string): boolean {
     this.guessedMove = move;
-    console.log(`all moves ${this.moves} ---- your move ${move}`);
     return this.moves[this.i] === move;
   }
 
