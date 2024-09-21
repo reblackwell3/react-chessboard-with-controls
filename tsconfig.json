@@ -1,11 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"],
-      "@stories": ["src/stories"],
-      "@stories/*": ["src/stories/*"]
-    },
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */
